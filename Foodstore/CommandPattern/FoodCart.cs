@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using static System.Formats.Asn1.AsnWriter;
 
 
@@ -12,6 +13,17 @@ namespace Foodstore.CommandPattern
     public class FoodCart
     {
         private List<FoodItem> items = new List<FoodItem>();
+        private ICommand _command;
+
+        public void SetCommand(ICommand command)
+        {
+            _command = command;
+        }
+
+        public void ExecuteCommand(object parameter)
+        {
+            _command.Execute(parameter);
+        }
         public void AddItem(FoodItem item)
         {
             items.Add(item);
