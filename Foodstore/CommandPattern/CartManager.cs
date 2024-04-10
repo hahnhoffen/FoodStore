@@ -10,13 +10,15 @@ namespace Foodstore.CommandPattern
     internal class CartManager
     {
         private ICommand _command;
+
         public void SetCommand(ICommand command)
         {
             _command = command;
         }
-        public void ExecuteCommand(object parameter)
+
+        public void ExecuteCommand()
         {
-            _command.Execute(parameter);
+            _command.Execute();
         }
     }
 }

@@ -40,18 +40,18 @@ namespace FoodStore
                     case "1":
                         DisplayMenu();
                         Console.WriteLine("Enter the item number to add:");
-                        Console.WriteLine();
                         int itemNumber;
                         if (int.TryParse(Console.ReadLine(), out itemNumber) && itemNumber >= 0 && itemNumber < store.GetMenu().Count)
                         {
-                            cart.AddItem(store.GetMenu()[itemNumber]);
+                            FoodItem selectedItem = store.GetMenu()[itemNumber];
+                            var addItemCommand = new AddItemCommand(cart, selectedItem);
+                            cart.SetCommand(addItemCommand);
+                            cart.ExecuteCommand();
                             Console.WriteLine("Item added to cart.");
-                            Console.WriteLine();
                         }
                         else
                         {
                             Console.WriteLine("Invalid item number.");
-                            Console.WriteLine();
                         }
                         break;
                     case "2":

@@ -19,15 +19,26 @@ namespace Foodstore.CommandPattern
         {
             _command = command;
         }
-
-        public void ExecuteCommand(object parameter)
+        public void ExecuteCommand()
         {
-            _command.Execute(parameter);
+            if (_command != null)
+            {
+                _command.Execute();
+            }
+            else
+            {
+                Console.WriteLine("No command set for the cart.");
+            }
         }
         public void AddItem(FoodItem item)
         {
-            items.Add(item);
-            Console.WriteLine(item.Name + " added to cart.");
+
+            if (_command == null)
+            {
+                Console.WriteLine("No command set for adding item to cart.");
+                return;
+            }
+            ExecuteCommand();
         }
         public void DisplayCart()
         {
@@ -39,16 +50,13 @@ namespace Foodstore.CommandPattern
         }
         public double CalculateTotalPrice(Dictionary<string, double> itemPrices)
         {
-            if (items.Count == 0)
-            {
-                Console.WriteLine("Cart is empty. Please add items to the cart.");
-                return 0;
-            }
-
             double totalPrice = 0;
             foreach (var item in items)
             {
-                totalPrice += item.Price;
+                if (itemPrices.ContainsKey(item.Name))
+                {
+                    totalPrice += itemPrices[item.Name];
+                }
             }
             return totalPrice;
         }
@@ -65,6 +73,10 @@ namespace Foodstore.CommandPattern
                 Console.WriteLine("Invalid item number.");
             }
         }
+        public void DirectAddItem(FoodItem item)
+        {
+            items.Add(item);
+            Console.WriteLine(item.Name + " added to cart.");
+        }
     }
 }
-

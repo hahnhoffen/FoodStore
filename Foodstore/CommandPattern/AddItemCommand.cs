@@ -8,23 +8,25 @@ using System.Windows.Input;
 
 namespace Foodstore.CommandPattern
 {
+    public interface ICommand
+    {
+        void Execute();
+    }
+
     public class AddItemCommand : ICommand
     {
-        private FoodCart _cart;
-        private FoodItem _item;
+        private readonly FoodCart _cart;
+        private readonly FoodItem _item;
+
         public AddItemCommand(FoodCart cart, FoodItem item)
         {
             _cart = cart;
             _item = item;
         }
-        public bool CanExecute(object parameter)
+
+        public void Execute()
         {
-            return true;
-        }
-        public event EventHandler CanExecuteChanged;
-        public void Execute(object parameter)
-        {
-            _cart.AddItem(_item);
+            _cart.DirectAddItem(_item);
         }
     }
 }
